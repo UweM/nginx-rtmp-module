@@ -269,7 +269,7 @@ context: rtmp, server
 If turned on, RTMP `set_buflen` commands from clients are ignored and only the `buflen` value of the configuration is used. Default is `off`
 
 ### srv_name
-syntax: `srv_name value`
+syntax: `srv_name value`  
 context: rtmp, server  
 
 Set the RTMP server string. Default is `NGINX RTMP`
