@@ -1246,7 +1246,7 @@ ngx_rtmp_relay_send_set_data_frame(ngx_rtmp_session_t *s)
     ngx_rtmp_relay_ctx_t           *ctx;
     ngx_rtmp_codec_ctx_t           *codec_ctx;
     ngx_rtmp_header_t               hdr;
-    ngx_rtmp_core_srv_conf_t *cscf;
+    ngx_rtmp_core_srv_conf_t       *cscf;
 
     static struct {
         double                      width;

@@ -587,7 +587,7 @@ static ngx_int_t
 ngx_rtmp_codec_reconstruct_meta(ngx_rtmp_session_t *s)
 {
     ngx_rtmp_codec_ctx_t           *ctx;
-    ngx_rtmp_core_srv_conf_t *cscf;
+    ngx_rtmp_core_srv_conf_t       *cscf;
     ngx_int_t                       rc;
 
     static struct {
