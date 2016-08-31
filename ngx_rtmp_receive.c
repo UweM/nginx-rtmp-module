@@ -157,6 +157,12 @@ ngx_rtmp_user_message_handler(ngx_rtmp_session_t *s, ngx_rtmp_header_t *h,
         case NGX_RTMP_USER_SET_BUFLEN:
             {
                 ngx_rtmp_set_buflen_t       v;
+                ngx_rtmp_core_srv_conf_t       *cscf;
+
+                cscf = ngx_rtmp_get_module_srv_conf(s, ngx_rtmp_core_module);
+                if(cscf->buflen_force) {
+                    return NGX_OK;
+                }
 
                 v.msid = val;
 
