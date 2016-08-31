@@ -6,6 +6,7 @@
 
 #include <ngx_config.h>
 #include <ngx_core.h>
+#include <ngx_string.h>
 #include "ngx_rtmp_codec_module.h"
 #include "ngx_rtmp_live_module.h"
 #include "ngx_rtmp_cmd_module.h"
@@ -586,7 +587,7 @@ static ngx_int_t
 ngx_rtmp_codec_reconstruct_meta(ngx_rtmp_session_t *s)
 {
     ngx_rtmp_codec_ctx_t           *ctx;
-    ngx_rtmp_core_srv_conf_t       *cscf;
+    ngx_rtmp_core_srv_conf_t *cscf;
     ngx_int_t                       rc;
 
     static struct {
@@ -602,11 +603,13 @@ ngx_rtmp_codec_reconstruct_meta(ngx_rtmp_session_t *s)
         u_char                      level[32];
     }                               v;
 
-    static ngx_rtmp_amf_elt_t       out_inf[] = {
+    cscf = ngx_rtmp_get_module_srv_conf(s, ngx_rtmp_core_module);
+
+    ngx_rtmp_amf_elt_t       out_inf[] = {
 
         { NGX_RTMP_AMF_STRING,
           ngx_string("Server"),
-          "NGINX RTMP (github.com/sergey-dryabzhinsky/nginx-rtmp-module)", 0 },
+          cscf->srv_name.data, 0 },
 
         { NGX_RTMP_AMF_NUMBER,
           ngx_string("width"),
@@ -661,7 +664,7 @@ ngx_rtmp_codec_reconstruct_meta(ngx_rtmp_session_t *s)
           &v.level, sizeof(v.level) },
     };
 
-    static ngx_rtmp_amf_elt_t       out_elts[] = {
+    ngx_rtmp_amf_elt_t       out_elts[] = {
 
         { NGX_RTMP_AMF_STRING,
           ngx_null_string,
@@ -677,7 +680,6 @@ ngx_rtmp_codec_reconstruct_meta(ngx_rtmp_session_t *s)
         return NGX_OK;
     }
 
-    cscf = ngx_rtmp_get_module_srv_conf(s, ngx_rtmp_core_module);
 
     if (ctx->meta) {
         ngx_rtmp_free_shared_chain(cscf, ctx->meta);

@@ -1246,6 +1246,7 @@ ngx_rtmp_relay_send_set_data_frame(ngx_rtmp_session_t *s)
     ngx_rtmp_relay_ctx_t           *ctx;
     ngx_rtmp_codec_ctx_t           *codec_ctx;
     ngx_rtmp_header_t               hdr;
+    ngx_rtmp_core_srv_conf_t *cscf;
 
     static struct {
         double                      width;
@@ -1260,11 +1261,12 @@ ngx_rtmp_relay_send_set_data_frame(ngx_rtmp_session_t *s)
         u_char                      level[32];
     }                               v;
 
-    static ngx_rtmp_amf_elt_t       out_inf[] = {
+    cscf = ngx_rtmp_get_module_srv_conf(s, ngx_rtmp_core_module);
+    ngx_rtmp_amf_elt_t       out_inf[] = {
 
         { NGX_RTMP_AMF_STRING,
           ngx_string("Server"),
-          "NGINX RTMP (github.com/arut/nginx-rtmp-module)", 0 },
+          cscf->srv_name.data, 0 },
 
         { NGX_RTMP_AMF_NUMBER,
           ngx_string("width"),
@@ -1319,7 +1321,7 @@ ngx_rtmp_relay_send_set_data_frame(ngx_rtmp_session_t *s)
           &v.level, sizeof(v.level) }
     };
 
-    static ngx_rtmp_amf_elt_t       out_elts[] = {
+    ngx_rtmp_amf_elt_t       out_elts[] = {
 
         { NGX_RTMP_AMF_STRING,
           ngx_null_string,

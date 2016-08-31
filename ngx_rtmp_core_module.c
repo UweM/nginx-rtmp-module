@@ -164,6 +164,13 @@ static ngx_command_t  ngx_rtmp_core_commands[] = {
       offsetof(ngx_rtmp_core_srv_conf_t, buflen_force),
       NULL },
 
+    { ngx_string("srv_name"),
+      NGX_RTMP_MAIN_CONF|NGX_RTMP_SRV_CONF|NGX_CONF_TAKE1,
+      ngx_conf_set_str_slot,
+      NGX_RTMP_SRV_CONF_OFFSET,
+      offsetof(ngx_rtmp_core_srv_conf_t, srv_name),
+      NULL },
+
       ngx_null_command
 };
 
@@ -286,6 +293,7 @@ ngx_rtmp_core_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child)
     ngx_conf_merge_msec_value(conf->buflen, prev->buflen, 1000);
     ngx_conf_merge_value(conf->busy, prev->busy, 0);
     ngx_conf_merge_value(conf->buflen_force, prev->buflen_force, 0);
+    ngx_conf_merge_str_value(conf->srv_name, prev->srv_name, "NGINX RTMP (github.com/sergey-dryabzhinsky/nginx-rtmp-module)");
 
     if (prev->pool == NULL) {
         prev->pool = ngx_create_pool(4096, &cf->cycle->new_log);
