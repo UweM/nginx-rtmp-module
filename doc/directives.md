@@ -17,6 +17,8 @@ Table of Contents
     * [max_queue](#max_queue)
     * [max_message](#max_message)
     * [buflen](#buflen)
+    * [buflen_force](#buflen_force)
+    * [srv_name](#srv_name)
     * [out_queue](#out_queue)
     * [out_cork](#out_cork)
 * [Access](#access)
@@ -259,6 +261,19 @@ before playing and resets this setting. Default is `1000 ms`.
 ```sh
 buflen 5s;
 ````
+
+### buflen_force
+syntax: `buflen_force on|off`  
+context: rtmp, server  
+
+If turned on, RTMP `set_buflen` commands from clients are ignored and only the `buflen` value of the configuration is used. Default is `off`
+
+### srv_name
+syntax: `srv_name value`
+context: rtmp, server  
+
+Set the RTMP server string. Default is `NGINX RTMP`
+
 
 #### out_queue
 
